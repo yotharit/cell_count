@@ -1,0 +1,21 @@
+
+Y	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(Í–Ñ¬
+d	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(óèÄ 
+i	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(öÖÒŠÿÿÿÿÿ
+d	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«¨Ü°
+i	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨â¡£ÿÿÿÿÿ
+d	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ü¯¥
+i	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÌãöŞÿÿÿÿÿ
+i	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÌãöŞÿÿÿÿÿ
+Z
+java:S2142"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€
+Q
+java:S1197"8Move the array designator from the variable to the type.(ç‡æ¤ıÿÿÿÿ
+3
+java:S1659"Declare "h" on a separate line.(À¿»®
+;
+java:S1659"(Declare "bestHeight" on a separate line.(”°í6
+3
+java:S1659"Declare "h" on a separate line.(òè¨‘
+5
+java:S1116"Remove this empty statement.(ôŸìúÿÿÿÿ
