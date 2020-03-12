@@ -9,7 +9,6 @@ import org.opencv.android.Utils
 import org.opencv.core.*
 import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
-import kotlin.math.min
 
 
 class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presenter {
@@ -22,12 +21,30 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
     }
 
     override fun findCellFromPlate(uri: Uri): Bitmap? {
-        val binarized = findBinarizeImage(uri)
-        return calculateCircularHough(binarized)
+        val maskedImage = maskCircle(uri)
+        val binarized = findBinarizeImage(maskedImage)
+        val circularHough = calculateCircularHough(binarized)
+        return circularHough
     }
 
-    private fun findBinarizeImage(uri: Uri): Bitmap {
-        val src = Imgcodecs.imread(uri.path)
+    private fun maskCircle(uri: Uri): Bitmap {
+        val src = Imgcodecs.imread(uri.path, CvType.CV_8U)
+        val circle = Mat(src.height(), src.width(), CvType.CV_8U)
+        val center = Point(((src.height() / 2).toDouble()), (src.width() / 2).toDouble())
+        val radius = src.height() / 2
+        Imgproc.circle(circle, center, radius, Scalar(255.0, 255.0, 255.0), -1)
+        val dst = Mat(src.height(), src.width(), CvType.CV_8U)
+        Imgproc.resize(circle, circle, src.size())
+        Core.bitwise_and(src, circle, dst)
+        val bmp = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888)
+        Utils.matToBitmap(dst, bmp)
+        return bmp
+    }
+
+    private fun findBinarizeImage(bitmap: Bitmap): Bitmap {
+//        val src = Imgcodecs.imread(uri.path)
+        val src = Mat(bitmap.height, bitmap.width, CvType.CV_8U)
+        Utils.bitmapToMat(bitmap, src)
         Imgproc.cvtColor(src, src, Imgproc.COLOR_RGB2GRAY)
         val dst = Mat(src.height(), src.width(), CvType.CV_8U)
 //        Imgproc.medianBlur(src,src,3)
@@ -53,17 +70,11 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
     }
 
     private fun calculateCircularHough(bitmap: Bitmap): Bitmap? {
-//        val input = Imgcodecs.imread(uri.path, Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
-        Log.d("LogCircularHough","input")
-        val input = Mat(bitmap.height,bitmap.width,CvType.CV_8U)
-        Log.d("LogCircularHough","map to mat")
-        Utils.bitmapToMat(bitmap,input)
-        Log.d("LogCircularHough","convert to gray")
+        val input = Mat(bitmap.height, bitmap.width, CvType.CV_8U)
+        Utils.bitmapToMat(bitmap, input)
         Imgproc.cvtColor(input, input, Imgproc.COLOR_RGB2GRAY)
         val circles = Mat()
-        Log.d("LogCircularHough","blur")
         Imgproc.blur(input, input, Size(7.0, 7.0), Point(2.0, 2.0))
-        Log.d("LogCircularHough","Hough")
         Imgproc.HoughCircles(
             input,
             circles,
@@ -73,20 +84,20 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
             100.0,
             90.0,
             10,
-            50
+            80
         )
-        Log.d("LogCircularHough","draw circle")
+        Imgproc.cvtColor(input,input,Imgproc.COLOR_GRAY2RGB)
         for (x in 0 until circles.cols()) {
             val circleVec = circles.get(0, x) ?: break
             val center = Point(circleVec[0], circleVec[1])
             val radius = circleVec[2].toInt()
-
-            Imgproc.circle(input, center, 3, Scalar(255.0, 255.0, 255.0), 5)
-            Imgproc.circle(input, center, radius, Scalar(255.0, 255.0, 255.0), 2)
+            Imgproc.circle(input, center, 3, Scalar(255.0, 0.0, 0.0), 10,8,0)
+            Imgproc.circle(input, center, radius, Scalar(255.0, 0.0, 0.0), 5,8,0)
         }
         val bmp = Bitmap.createBitmap(input.cols(), input.rows(), Bitmap.Config.ARGB_8888)
         Utils.matToBitmap(input, bmp)
         input.release()
+        getView()?.setResult("Found : ${circles.cols()} Cells")
         return bmp
     }
 }

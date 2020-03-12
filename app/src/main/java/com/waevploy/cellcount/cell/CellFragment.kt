@@ -73,6 +73,10 @@ class CellFragment : BaseMvpFragment<CellContract.View, CellContract.Presenter>(
         }
     }
 
+    override fun setResult(text: String) {
+        resultTextView.text = text
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)

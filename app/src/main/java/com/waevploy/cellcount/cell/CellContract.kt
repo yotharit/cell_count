@@ -8,6 +8,7 @@ class CellContract : BaseMvpContract {
 
     interface View : BaseMvpContract.View {
         fun alertOpenCv(cvAlert: Boolean)
+        fun setResult(text: String)
     }
 
     interface Presenter : BaseMvpContract.Presenter<View> {
