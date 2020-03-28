@@ -29,3 +29,14 @@ n
 >app/src/main/java/com/waevploy/cellcount/cell/CellPresenter.kt,7/4/74356280f1f0cc022d8aec82f8cbbc6df504fac7
 m
 =app/src/main/java/com/waevploy/cellcount/cell/CellFragment.kt,5/6/5634aff10f40f5166bbd3b7e18357c899a2c3579
+X
+(gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
+?
+settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
+A
+gradle.properties,2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4
+>
+app/.gitignore,5/1/51e1c5d383dfaa35e0e7e5873a0a99355a86880f
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
