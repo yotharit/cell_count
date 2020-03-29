@@ -25,6 +25,9 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 		uri: Uri,
 		brightness: Double,
 		contrast: Double,
+		dp: Double,
+		param1: Double,
+		param2: Double,
 		minDistant: Double,
 		minRadius: Int,
 		maxRadius: Int,
@@ -36,7 +39,15 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 		val maskedImage = maskCircle(adjustedImage)
 		val addBrightness = addBrightness(maskedImage)
 		val binaryImage = findBinarizeImage(addBrightness, maxValue, blockSize, c)
-		return calculateCircularHough(binaryImage, minDistant, minRadius, maxRadius)
+		return calculateCircularHough(
+			binaryImage,
+			dp,
+			param1,
+			param2,
+			minDistant,
+			minRadius,
+			maxRadius
+		)
 	}
 
 	private fun adjustImage(uri: Uri, brightness: Double, contrast: Double): Bitmap {
@@ -134,6 +145,9 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 
 	private fun calculateCircularHough(
 		bitmap: Bitmap,
+		dp: Double,
+		param1: Double,
+		param2: Double,
 		minDistant: Double,
 		minRadius: Int,
 		maxRadius: Int
@@ -147,10 +161,10 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 			input,
 			circles,
 			Imgproc.CV_HOUGH_GRADIENT,
-			2.0,
+			dp,
 			minDistant,
-			90.0,
-			100.0,
+			param1,
+			param2,
 			minRadius,
 			maxRadius
 		)

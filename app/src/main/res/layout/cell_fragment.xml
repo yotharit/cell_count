@@ -142,7 +142,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
-            android:hint="Block Size">
+            android:hint="Block Size - 3,5,7 and so on (Odd Number)">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/blockSizeEditText"
@@ -158,7 +158,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
-            android:hint="C">
+            android:hint="C - Normally positive value">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/cEditText"
@@ -186,6 +186,21 @@
             android:layout_marginEnd="12dp"
             android:background="@android:color/black"
             />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:hint="dp - The inverse ratio of resolution">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dpEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:text="2" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -193,7 +208,39 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
-            android:hint="Min Distant">
+            android:hint="Param 1 - Upper threshold for the internal Canny edge detector">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/param1EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:text="90" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:hint="Param 2 - Threshold for center detection">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/param2EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:text="100" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:hint="Min Distant - Minimum distance between detected centers">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/minDistantEditText"
