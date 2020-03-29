@@ -74,13 +74,19 @@ class CellFragment : BaseMvpFragment<CellContract.View, CellContract.Presenter>(
 				val minDistant = minDistantEditText.text.toString().toDouble()
 				val maxRadius = maxRadiusEditText.text.toString().toInt()
 				val minRadius = minRadiusEditText.text.toString().toInt()
+				val maxValue = maxValueEditText.text.toString().toDouble()
+				val blockSize = blockSizeEditText.text.toString().toInt()
+				val c = cEditText.text.toString().toDouble()
 				mPresenter.findCellFromPlate(
 					result.uri,
 					brightness,
 					contrast,
 					minDistant,
 					minRadius,
-					maxRadius
+					maxRadius,
+					maxValue,
+					blockSize,
+					c
 				)?.let {
 					imageView.setImageBitmap(it)
 				}

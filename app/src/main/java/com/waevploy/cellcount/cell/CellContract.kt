@@ -18,7 +18,10 @@ class CellContract : BaseMvpContract {
 			contrast: Double,
 			minDistant: Double,
 			minRadius: Int,
-			maxRadius: Int
+			maxRadius: Int,
+			maxValue: Double,
+			blockSize: Int,
+			c: Double
 		): Bitmap?
 	}
 }

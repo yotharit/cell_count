@@ -27,12 +27,15 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 		contrast: Double,
 		minDistant: Double,
 		minRadius: Int,
-		maxRadius: Int
+		maxRadius: Int,
+		maxValue: Double,
+		blockSize: Int,
+		c: Double
 	): Bitmap? {
 		val adjustedImage = adjustImage(uri, brightness, contrast)
 		val maskedImage = maskCircle(adjustedImage)
 		val addBrightness = addBrightness(maskedImage)
-		val binaryImage = findBinarizeImage(addBrightness)
+		val binaryImage = findBinarizeImage(addBrightness, maxValue, blockSize, c)
 		return calculateCircularHough(binaryImage, minDistant, minRadius, maxRadius)
 	}
 
@@ -101,7 +104,12 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 		return bmp
 	}
 
-	private fun findBinarizeImage(bitmap: Bitmap): Bitmap {
+	private fun findBinarizeImage(
+		bitmap: Bitmap,
+		maxValue: Double,
+		blockSize: Int,
+		c: Double
+	): Bitmap {
 		val src = Mat(bitmap.height, bitmap.width, CvType.CV_8U)
 		Utils.bitmapToMat(bitmap, src)
 		Imgproc.cvtColor(src, src, Imgproc.COLOR_RGB2GRAY)
@@ -110,8 +118,8 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 		val blurFilter = Mat(src.height(), src.width(), CvType.CV_8U)
 		Imgproc.bilateralFilter(src, blurFilter, 11, 90.0, 90.0, Core.BORDER_ISOLATED)
 		Imgproc.adaptiveThreshold(
-			blurFilter, dst, 500.0, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,
-			Imgproc.THRESH_BINARY, 21, 2.0
+			blurFilter, dst, maxValue, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,
+			Imgproc.THRESH_BINARY, blockSize, c
 		)
 		Core.bitwise_not(dst, dst)
 		for (i in 0..2) {
