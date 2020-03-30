@@ -25,25 +25,16 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 		uri: Uri,
 		brightness: Double,
 		contrast: Double,
-		dp: Double,
-		param1: Double,
-		param2: Double,
 		minDistant: Double,
 		minRadius: Int,
-		maxRadius: Int,
-		maxValue: Double,
-		blockSize: Int,
-		c: Double
+		maxRadius: Int
 	): Bitmap? {
 		val adjustedImage = adjustImage(uri, brightness, contrast)
 		val maskedImage = maskCircle(adjustedImage)
 		val addBrightness = addBrightness(maskedImage)
-		val binaryImage = findBinarizeImage(addBrightness, maxValue, blockSize, c)
+		val binaryImage = findBinarizeImage(addBrightness)
 		return calculateCircularHough(
 			binaryImage,
-			dp,
-			param1,
-			param2,
 			minDistant,
 			minRadius,
 			maxRadius
@@ -116,10 +107,7 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 	}
 
 	private fun findBinarizeImage(
-		bitmap: Bitmap,
-		maxValue: Double,
-		blockSize: Int,
-		c: Double
+		bitmap: Bitmap
 	): Bitmap {
 		val src = Mat(bitmap.height, bitmap.width, CvType.CV_8U)
 		Utils.bitmapToMat(bitmap, src)
@@ -129,8 +117,8 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 		val blurFilter = Mat(src.height(), src.width(), CvType.CV_8U)
 		Imgproc.bilateralFilter(src, blurFilter, 11, 90.0, 90.0, Core.BORDER_ISOLATED)
 		Imgproc.adaptiveThreshold(
-			blurFilter, dst, maxValue, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,
-			Imgproc.THRESH_BINARY, blockSize, c
+			blurFilter, dst, 500.0, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,
+			Imgproc.THRESH_BINARY, 21, 2.0
 		)
 		Core.bitwise_not(dst, dst)
 		for (i in 0..2) {
@@ -145,9 +133,6 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 
 	private fun calculateCircularHough(
 		bitmap: Bitmap,
-		dp: Double,
-		param1: Double,
-		param2: Double,
 		minDistant: Double,
 		minRadius: Int,
 		maxRadius: Int
@@ -161,10 +146,10 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 			input,
 			circles,
 			Imgproc.CV_HOUGH_GRADIENT,
-			dp,
+			2.0,
 			minDistant,
-			param1,
-			param2,
+			90.0,
+			100.0,
 			minRadius,
 			maxRadius
 		)
