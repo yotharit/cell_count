@@ -9,9 +9,58 @@ import org.opencv.core.*
 import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 import org.opencv.photo.Photo
+import kotlin.math.floor
 
 
 class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presenter {
+
+	private var step = 1
+	private var cropUri: Uri? = null
+	private var brightness: Double = 0.0
+	private var contrast: Double = 0.0
+	private var minDistant: Double = 0.0
+	private var minRadius = 0
+	private var maxRadius = 0
+
+	override fun handleLogic(uri: Uri) {
+		when (step) {
+			1 -> {
+				cropUri = uri
+				step++
+				cropUri?.let {
+					getView()?.cropMinRadius(it)
+				}
+			}
+			2 -> {
+				minRadius = floor(findRadius(uri) * 0.3).toInt()
+				step++
+				cropUri?.let {
+					getView()?.cropMaxRadius(it)
+				}
+			}
+			3 -> {
+				maxRadius = floor(findRadius(uri) * 1.5).toInt()
+				step = 1
+				cropUri?.let {
+					findCellFromPlate(
+						it,
+						brightness, contrast, minDistant, minRadius, maxRadius
+					)?.let {
+						getView()?.setImage(it)
+					}
+				}
+			}
+			else -> {
+				step = 1
+			}
+		}
+	}
+
+	override fun setValue(brightness: Double, contrast: Double, minDistant: Double) {
+		this.brightness = brightness
+		this.contrast = contrast
+		this.minDistant = minDistant
+	}
 
 	override fun onViewCreate() {
 		if (OpenCVLoader.initDebug()) {
@@ -21,7 +70,7 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 		}
 	}
 
-	override fun findCellFromPlate(
+	private fun findCellFromPlate(
 		uri: Uri,
 		brightness: Double,
 		contrast: Double,
@@ -166,6 +215,13 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 		input.release()
 		getView()?.setResult("Found : ${circles.cols()} Cells")
 		return bmp
+	}
+
+	private fun findRadius(uri: Uri): Int {
+		var src = Imgcodecs.imread(uri.path)
+		val radius = src.width()
+		src.release()
+		return radius
 	}
 }
 
