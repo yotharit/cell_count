@@ -39,7 +39,7 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 				}
 			}
 			3 -> {
-				maxRadius = floor(findRadius(uri) * 1.5).toInt()
+				maxRadius = floor(findRadius(uri) * 1.1).toInt()
 				step = 1
 				cropUri?.let {
 					findCellFromPlate(
