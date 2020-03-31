@@ -21,6 +21,7 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 	private var minDistant: Double = 0.0
 	private var minRadius = 0
 	private var maxRadius = 0
+	private var param2: Double = 0.0
 
 	override fun handleLogic(uri: Uri) {
 		when (step) {
@@ -56,10 +57,11 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 		}
 	}
 
-	override fun setValue(brightness: Double, contrast: Double, minDistant: Double) {
+	override fun setValue(brightness: Double, contrast: Double, param2: Double) {
 		this.brightness = brightness
 		this.contrast = contrast
-		this.minDistant = minDistant
+		this.minDistant = 50.0
+		this.param2 = param2
 	}
 
 	override fun onViewCreate() {
@@ -198,7 +200,7 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 			2.0,
 			minDistant,
 			90.0,
-			100.0,
+			param2,
 			minRadius,
 			maxRadius
 		)

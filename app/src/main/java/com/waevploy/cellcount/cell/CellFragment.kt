@@ -76,8 +76,8 @@ class CellFragment : BaseMvpFragment<CellContract.View, CellContract.Presenter>(
 		chooseImageButton.setOnClickListener {
 			val brightness = brightnessEditText.text.toString().toDouble()
 			val contrast = contrastEditText.text.toString().toDouble()
-			val minDistant = minDistantEditText.text.toString().toDouble()
-			mPresenter.setValue(brightness, contrast, minDistant)
+			val param2 = param2EditText.text.toString().toDouble()
+			mPresenter.setValue(brightness, contrast, param2)
 			cropImage()
 		}
 	}
@@ -103,17 +103,6 @@ class CellFragment : BaseMvpFragment<CellContract.View, CellContract.Presenter>(
 			val result = CropImage.getActivityResult(data)
 			if (resultCode == Activity.RESULT_OK) {
 				mPresenter.handleLogic(result.uri)
-//				val brightness = brightnessEditText.text.toString().toDouble()
-//				val contrast = contrastEditText.text.toString().toDouble()
-//				val minDistant = minDistantEditText.text.toString().toDouble()
-//				val maxRadius = maxRadiusEditText.text.toString().toInt()
-//				val minRadius = minRadiusEditText.text.toString().toInt()
-//				mPresenter.findCellFromPlate(
-//					result.uri,
-//					brightness, contrast, minDistant, minRadius, maxRadius
-//				)?.let {
-//					imageView.setImageBitmap(it)
-//				}
 			} else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
 				val error = result.error
 				Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show();

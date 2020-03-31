@@ -126,14 +126,14 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="12dp"
-            android:hint="Min Distant - Minimum distance between detected centers">
+            android:hint="Sensitivity - The lesser the more false circle">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/minDistantEditText"
+                android:id="@+id/param2EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
-                android:text="50" />
+                android:text="100" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>

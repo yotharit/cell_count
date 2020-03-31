@@ -20,7 +20,7 @@ class CellContract : BaseMvpContract {
 		fun setValue(
 			brightness: Double,
 			contrast: Double,
-			minDistant: Double
+			param2: Double
 		)
 	}
 }
