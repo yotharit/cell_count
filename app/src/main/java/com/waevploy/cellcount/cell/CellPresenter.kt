@@ -57,6 +57,17 @@ class CellPresenter : BaseMvpPresenter<CellContract.View>(), CellContract.Presen
 		}
 	}
 
+	override fun reprocess() {
+		cropUri?.let {
+			findCellFromPlate(
+				it,
+				brightness, contrast, minDistant, minRadius, maxRadius
+			)?.let {
+				getView()?.setImage(it)
+			}
+		}
+	}
+
 	override fun setValue(brightness: Double, contrast: Double, param2: Double) {
 		this.brightness = brightness
 		this.contrast = contrast

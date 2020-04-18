@@ -22,5 +22,6 @@ class CellContract : BaseMvpContract {
 			contrast: Double,
 			param2: Double
 		)
+		fun reprocess()
 	}
 }

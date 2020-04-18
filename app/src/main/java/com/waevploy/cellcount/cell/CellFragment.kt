@@ -80,6 +80,13 @@ class CellFragment : BaseMvpFragment<CellContract.View, CellContract.Presenter>(
 			mPresenter.setValue(brightness, contrast, param2)
 			cropImage()
 		}
+		runAgainImageButton.setOnClickListener {
+			val brightness = brightnessEditText.text.toString().toDouble()
+			val contrast = contrastEditText.text.toString().toDouble()
+			val param2 = param2EditText.text.toString().toDouble()
+			mPresenter.setValue(brightness, contrast, param2)
+			mPresenter.reprocess()
+		}
 	}
 
 	override fun init() {
