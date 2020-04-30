@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">cellcount</string>
-    <string name="choose_image_button_text">Choose Image</string>
+    <string name="choose_image_button_text">Done and Choose New File</string>
 </resources>

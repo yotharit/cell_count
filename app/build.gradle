@@ -24,7 +24,7 @@ android {
     }
     externalNativeBuild {
         ndkBuild {
-            path file('../../CellCount/native/jni/OpenCV.mk')
+            path file('../../cell_count/native/jni/OpenCV.mk')
         }
     }
     sourceSets {

@@ -7,8 +7,6 @@ B
 -openCVLibrary343/src/main/AndroidManifest.xml,9/2/920c71489dd22674d48c0224e285114deca69cc5
 M
 openCVLibrary343/build.gradle,0/3/031537bb87ed7eb43bf905aa023d982e611e6f47
-@
-local.properties,0/7/0712df971a99ac4d2fccb8e0fb19f377f3374cca
 v
 FopenCVLibrary343/src/main/java/org/opencv/android/JavaCamera2View.java,b/8/b84be52b2bed039b6258f7292335064ceac4f679
 p
